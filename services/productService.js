@@ -10,7 +10,42 @@ const validExistence = async (name) => {
   return product;
 };
 
+const getAll = async () => {
+  const product = await productModel.getAll();
+  console.log(product);
+  return product;
+};
+
+const getById = async (id) => {
+  const product = await productModel.getById(id);
+  return product;
+};
+
+const update = async ({ name, quantity, id }) => {
+  const product = await productModel.update({ name, quantity, id });
+  return product;
+};
+
+const remove = async (id) => {
+  const product = await productModel.remove(id);
+  return product;
+};
+
+const validRemove = async (id) => {
+  const [product] = await productModel.getById(id);
+  console.log(product);
+  if (product === undefined) {
+    return false;
+  }
+  return true;
+};
+
 module.exports = {
   createProduct,
   validExistence,
+  getById,
+  getAll,
+  update,
+  remove,
+  validRemove,
 };

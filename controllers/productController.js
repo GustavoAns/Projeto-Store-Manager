@@ -46,9 +46,56 @@ const validQuantity = async (req, res, next) => {
   next();
 };
 
+const getById = async (req, res) => {
+  const { id } = req.params;
+  const productById = await productService.getById(id);
+  console.log(productById);
+  console.log(productById.length === 0);
+  if (productById.length === 0) {
+    return res.status(404).json({ message: 'Product not found' });
+  }
+  return res.status(200).json(productById);
+};
+
+const getAll = async (_req, res) => {
+  const product = await productService.getAll();
+  console.log(product);
+  return res.status(200).json(product);
+};
+
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { name, quantity } = req.body;
+  const productById = await productService.update({ name, quantity, id });
+  if (productById.message) {
+    return res.status(404).json(productById);
+  }
+  return res.status(200).json(productById);
+};
+
+const validRemove = async (req, res, next) => {
+  const { id } = req.params;
+  const productById = await productService.validRemove(id);
+  if (productById) {
+    return next();
+  }
+  return res.status(404).json({ message: 'Product not found' });
+};
+
+const remove = async (req, res) => {
+  const { id } = req.params;
+  const productById = await productService.remove(id);
+  return res.status(200).json(productById);
+};
+
 module.exports = {
   createProduct,
   validName,
   validExistence,
   validQuantity,
+  getAll,
+  getById,
+  update,
+  remove,
+  validRemove,
 };

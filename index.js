@@ -18,6 +18,13 @@ app.listen(process.env.PORT, () => {
   console.log(`Escutando na porta ${process.env.PORT}`);
 });
 
-app.post('/products', productController.validName,
-productController.validExistence, productController.validQuantity, productController.createProduct);
-// app.post('/products', productController.validName);
+app.post('/products', productController.validName, productController.validExistence,
+  productController.validQuantity, productController.createProduct);
+
+app.get('/products', productController.getAll);
+app.get('/products/:id', productController.getById);
+
+app.put('/products/:id', productController.validName,
+  productController.validQuantity, productController.update);
+
+app.delete('/products/:id', productController.validRemove, productController.remove);
