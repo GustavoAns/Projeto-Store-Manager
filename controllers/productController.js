@@ -2,9 +2,7 @@ const productService = require('../services/productService');
 
 const createProduct = async (req, res) => {
   const { name, quantity } = req.body;
-  
   const product = await productService.createProduct({ name, quantity });
-
   res.status(201).json(product);
 };
 
@@ -49,9 +47,7 @@ const validQuantity = async (req, res, next) => {
 const getById = async (req, res) => {
   const { id } = req.params;
   const productById = await productService.getById(id);
-  console.log(productById);
-  console.log(productById.length === 0);
-  if (productById.length === 0) {
+  if (productById === undefined) {
     return res.status(404).json({ message: 'Product not found' });
   }
   return res.status(200).json(productById);
@@ -59,7 +55,6 @@ const getById = async (req, res) => {
 
 const getAll = async (_req, res) => {
   const product = await productService.getAll();
-  console.log(product);
   return res.status(200).json(product);
 };
 
@@ -76,6 +71,7 @@ const update = async (req, res) => {
 const validRemove = async (req, res, next) => {
   const { id } = req.params;
   const productById = await productService.validRemove(id);
+  console.log(productById);
   if (productById) {
     return next();
   }

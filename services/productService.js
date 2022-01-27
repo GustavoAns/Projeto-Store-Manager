@@ -12,7 +12,6 @@ const validExistence = async (name) => {
 
 const getAll = async () => {
   const product = await productModel.getAll();
-  console.log(product);
   return product;
 };
 
@@ -32,8 +31,7 @@ const remove = async (id) => {
 };
 
 const validRemove = async (id) => {
-  const [product] = await productModel.getById(id);
-  console.log(product);
+  const product = await productModel.getById(id);
   if (product === undefined) {
     return false;
   }

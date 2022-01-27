@@ -1,8 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const productController = require('./controllers/productController');
-// const salestController = require('./controllers/salesController');
-// const salesProductsController = require('./controllers/salesProductsController');
+const salesController = require('./controllers/salesController');
 
 require('dotenv').config();
 
@@ -28,3 +27,11 @@ app.put('/products/:id', productController.validName,
   productController.validQuantity, productController.update);
 
 app.delete('/products/:id', productController.validRemove, productController.remove);
+
+// app.post('/sales', salestController.validName, salestController.validExistence,
+// salestController.validQuantity, salestController.createProduct);
+app.post('/sales', salesController.validProductId, salesController.validQuantity,
+  salesController.createSales);
+
+app.get('/sales', salesController.getAll);
+app.get('/sales/:id', salesController.getById);
