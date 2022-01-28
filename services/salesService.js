@@ -12,13 +12,18 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-  console.log(id);
   const allSales = await salesModel.getById(id);
   return allSales;
+};
+
+const update = async ({ productId, quantity, id }, body) => {
+  const product = await salesModel.update({ productId, quantity, id }, body);
+  return product;
 };
 
 module.exports = {
   createSales,
   getAll,
   getById,
+  update,
 };

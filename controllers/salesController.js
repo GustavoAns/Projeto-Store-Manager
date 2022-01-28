@@ -46,19 +46,26 @@ const createSales = async (req, res) => {
 
 const getAll = async (_req, res) => {
   const product = await salesService.getAll();
-  console.log('Get All');
   return res.status(200).json(product);
 };
 
 const getById = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   const product = await salesService.getById(id);
-  console.log(product);
   if (product.length === 0) {
     return res.status(404).json({ message: 'Sale not found' });
   }
   return res.status(200).json(product);
+};
+
+const update = async (req, res) => {
+  const { id } = req.params;
+  const [{ product_id: productId, quantity }] = req.body;
+  const productById = await salesService.update({ productId, quantity, id }, req.body);
+  if (productById.message) {
+    return res.status(404).json(productById);
+  }
+  return res.status(200).json(productById);
 };
 
 module.exports = {
@@ -67,4 +74,5 @@ module.exports = {
   createSales,
   getAll,
   getById,
+  update,
 };

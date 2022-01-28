@@ -38,8 +38,23 @@ const getById = async (id) => {
   return rows;
 };
 
+const update = async ({ productId, quantity, id }, body) => {
+  const [rows] = await connection.execute(
+    'UPDATE sales_products SET product_id = ?, quantity = ? WHERE sale_id = ?',
+    [productId, quantity, id],
+  );
+  if (rows.affectedRows === 0) {
+    return { message: 'Product not found' };
+  }
+  return {
+    saleId: id,
+    itemUpdated: body,
+  };
+};
+
 module.exports = {
   createSales,
   getAllSales,
   getById,
+  update,
 };

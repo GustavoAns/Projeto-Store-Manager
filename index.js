@@ -35,3 +35,6 @@ app.post('/sales', salesController.validProductId, salesController.validQuantity
 
 app.get('/sales', salesController.getAll);
 app.get('/sales/:id', salesController.getById);
+
+app.put('/sales/:id', salesController.validProductId,
+salesController.validQuantity, salesController.update);
