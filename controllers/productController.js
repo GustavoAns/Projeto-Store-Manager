@@ -71,7 +71,6 @@ const update = async (req, res) => {
 const validRemove = async (req, res, next) => {
   const { id } = req.params;
   const productById = await productService.validRemove(id);
-  console.log(productById);
   if (productById) {
     return next();
   }
